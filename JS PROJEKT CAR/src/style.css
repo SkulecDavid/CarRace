@@ -1,0 +1,24 @@
+/* Saját stílusok */
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #222;
+    color: white;
+    overflow: hidden;
+}
+
+canvas {
+    border: 4px solid white;
+    background: #000;
+}
+
+#ui {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    pointer-events: none;
+}
