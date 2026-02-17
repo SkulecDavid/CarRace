@@ -3,16 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sablon</title>
+  <title>Evening Racer</title>
 </head>
 
 <body class="bg-light">
   <div id="ui">
-    <h1>Autóverseny</h1>
-    <p>Használd a nyilakat</p>
-    <h2 id="score-display">Pontszám: 0</h2>
+    <img src="/src/Images/Player.png" id="player-img" style="display: none;">
+    <img src="/src/Images/EnemyA.png" id="enemya-img" style="display: none;">
+    <img src="/src/Images/EnemyB.png" id="enemyb-img" style="display: none;">
+    <h1>Evening Racer</h1>
+    <p>Use the arrow keys to steer</p>
+    <h2 id="score-display">Score: 0</h2>
     <canvas id="game-canvas"></canvas>
   </div>
   <script type="module" src="/src/main.js"></script>

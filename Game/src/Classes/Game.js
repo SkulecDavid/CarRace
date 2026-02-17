@@ -56,7 +56,7 @@ export class Game{
                 if (this.player.y > this.canvasHeight / 2){
                     this.score += 5;
                 }
-                this.scoreDisplay.innerHTML = 'Pontszám ' + this.score;
+                this.scoreDisplay.innerHTML = 'Score: ' + this.score;
             }
         })
 

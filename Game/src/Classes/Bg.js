@@ -2,7 +2,7 @@ export class Bg{
     constructor(game){
         this.game = game;
         this.width = this.game.canvasWidth;
-        this.height = 10;
+        this.height = 8;
         this.color = '#546FF0'
         this.speed = 10; //
 
