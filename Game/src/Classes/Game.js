@@ -27,6 +27,10 @@ export class Game{
 
         this.scoreDisplay = document.querySelector('#score-display');
         this.score = 0;
+        this.highscoreDisplay = document.querySelector('#highscore-display');
+        this.highScore = 0;
+
+        this.time = 0;
 
         this.fps = 60;
     }
@@ -57,6 +61,10 @@ export class Game{
                     this.score += 5;
                 }
                 this.scoreDisplay.innerHTML = 'Score: ' + this.score;
+                if (this.score > this.highScore){
+                    this.highScore = this.score;
+                    this.highscoreDisplay.innerHTML = 'High Score: ' + this.score;
+                }
             }
         })
 
@@ -134,28 +142,13 @@ export class Game{
         this.update();
         this.draw();
         if (!this.gameOver){
-            this.animate(this.fps);
+            this.fpsCap(this.fps);
         }
-    }
-
-    animate() {
-        setTimeout(() => {
-            requestAnimationFrame(()=> this.loop());
-            }, 100 / this.fps);
     }
 
     start(){
         this.loop();
-    }
-
-    rnd(min, max) {
-        return Math.random() * (max - min + 1) + min;
-    }
-    
-    offset(canvasHeight, height, lane){
-        lane = lane * 2 - 1
-        return ((canvasHeight / 8) * lane - height / 2) +
-            (this.rnd(-1, 1) * (canvasHeight / 32));
+        setTimeout
     }
 
     checkCollision(rect1, rect2){
@@ -165,5 +158,22 @@ export class Game{
             rect1.y < rect2.y + rect2.height &&
             rect1.y + rect1.height > rect2.y
         )
+    }
+
+    offset(canvasHeight, height, lane){
+        lane = lane * 2 - 1
+        return ((canvasHeight / 8) * lane - height / 2) +
+            (this.rnd(-1, 1) * (canvasHeight / 32));
+    }
+
+
+    fpsCap() {
+        setTimeout(() => {
+            requestAnimationFrame(()=> this.loop());
+            }, 100 / this.fps);
+    }
+
+    rnd(min, max) {
+        return Math.random() * (max - min + 1) + min;
     }
 }
