@@ -4,10 +4,12 @@ export class Player{
         this.width = 60;
         this.height = 40;
         this.color = '#FA50A7'
-        this.speed = 6; //
+        this.speed = 5; //
 
         this.x = 10;
         this.y = this.game.canvasHeight / 2 - this.height / 2;
+
+        this.image = document.querySelector('#player-img')
     }
 
     update(){
@@ -45,7 +47,12 @@ export class Player{
     }
 
     draw(){
-        this.game.ctx.fillStyle = this.color;
-        this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        //this.game.ctx.fillStyle = this.color;
+        //this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.game.ctx.drawImage(
+            this.image,
+            this.x,
+            this.y
+        )
     }
 }

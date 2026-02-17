@@ -12,6 +12,11 @@ export class Enemy{
             this.game.rnd(5,7) * 2 : this.game.rnd(5,7)); // 
 
         this.markedForDeletion = false;
+
+        this.image = (this.y > this.game.canvasHeight / 2 ?
+            document.querySelector('#enemya-img') : document.querySelector('#enemyb-img'));
+        //this.imageA = document.querySelector('#enemya-img')
+        //this.imageB = document.querySelector('#enemyb-img')
     }
 
     update(){
@@ -19,8 +24,13 @@ export class Enemy{
     }
 
     draw(){
-        this.game.ctx.fillStyle = this.color;
-        this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        //this.game.ctx.fillStyle = this.color;
+        //this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.game.ctx.drawImage(
+            this.image, 
+            this.x,
+            this.y)
+
     }
 
     isOffScreen(){
