@@ -32,10 +32,17 @@ export class Game{
 
         this.time = 0;
 
-        this.fps = 60;
+        this.fps = 120;
+
+        this.music = document.querySelector('#music');
+        this.playMusic = false;
+        this.musicTurn();
+        
     }
 
     update(){
+        //this.musicTurn()
+
         this.player.update();
 
         if (this.enemyTimer > this.enemyInterval){
@@ -103,13 +110,14 @@ export class Game{
         this.player.draw();
 
         if (this.gameOver){
+            this.music.pause();
             this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                 this.ctx.fillRect(0,0,this.canvasWidth,this.canvasHeight);
 
                 this.ctx.fillStyle ="white";
                 this.ctx.font = "40px Arial";
                 this.ctx.textAlign = "center";
-                this.ctx.fillText("Játék vége",
+                this.ctx.fillText("GAME OVER",
                     this.canvasWidth/2,
                     this.canvasHeight/2)
         }
@@ -127,6 +135,19 @@ export class Game{
         })
     }
 
+    musicTurn(){
+        console.log(this.inputKeys);
+        
+        if (this.inputKeys['m']){
+            this.playMusic = false;
+            this.music.pause();
+        }
+        if (this.inputKeys['n']){
+            this.playMusic = true;
+            this.music.play();
+        }
+    }
+
     restart(){
         this.score = 0;
         this.scoreDisplay.innerHTML = 'Pontszám '+ this.score;
@@ -134,6 +155,10 @@ export class Game{
         this.enemyTimer = 0;
         this.gameOver = false;
         this.player = new Player(this);
+        if (this.playMusic){
+            this.music.load();
+            this.music.play();
+        }
         this.loop();
     }
 
@@ -147,6 +172,10 @@ export class Game{
     }
 
     start(){
+        if (this.playMusic){
+            this.music.load();
+            this.music.play();
+        }
         this.loop();
     }
 
@@ -167,9 +196,14 @@ export class Game{
 
 
     fpsCap() {
+        if (this.playMusic){
+            setTimeout(() => {
+            requestAnimationFrame(()=> this.loop());
+            }, 1000 / this.fps);
+        } else {
         setTimeout(() => {
             requestAnimationFrame(()=> this.loop());
-            }, 100 / this.fps);
+            }, 1000 / this.fps);}
     }
 
     rnd(min, max) {
