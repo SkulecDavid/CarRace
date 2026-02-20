@@ -56,7 +56,7 @@ export class Game{
 
     update(){
         // MUSIC
-        this.musicTurn()
+        this.musicToggle()
 
 
         // PLAYER
@@ -146,24 +146,30 @@ export class Game{
     }
 
     draw(){
+        // LINES
         this.lines.forEach(l =>{
             l.draw();
         });
 
+        // ENEMIES
         this.enemies.forEach(e =>{
             e.draw();
         });
 
+        // BONUSES
         this.bonuses.forEach(b => {
             b.draw();
         })
 
+        // DANGERS
         this.dangers.forEach(d => {
             d.draw();
         })
 
+        // PLAYER
         this.player.draw();
 
+        // GAMEOVER
         if (this.gameOver){
             this.music.pause();
             this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
@@ -190,8 +196,7 @@ export class Game{
         })
     }
 
-    musicTurn(){
-        //console.log(this.inputKeys);
+    musicToggle(){ // t
         if (this.inputKeys['m']){
             this.playMusic = false;
             this.music.pause();
