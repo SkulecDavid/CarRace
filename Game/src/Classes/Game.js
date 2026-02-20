@@ -3,6 +3,7 @@ import { Bonus } from "./Bonus.js";
 //import { Countdown } from "./Countdown.js";
 import { Danger } from "./Danger.js";
 import { Enemy } from "./Enemy.js";
+import { Music } from "./Music.js";
 import { Player } from "./Player.js";
 
 export class Game{
@@ -41,9 +42,10 @@ export class Game{
         this.dangerInterval = this.rnd(300, 500);
 
         // MUSIC
-        this.music = document.querySelector('#music');
+        this.music = new Music(this);
+        /*this.music = document.querySelector('#music');
         this.playMusic = false;
-        this.musicTurn();
+        this.musicToggle();*/
 
         // OTHER
         this.gameOver = false;
@@ -56,7 +58,8 @@ export class Game{
 
     update(){
         // MUSIC
-        this.musicToggle()
+        //this.musicToggle()
+        this.music.musicToggle();
 
 
         // PLAYER
@@ -171,7 +174,7 @@ export class Game{
 
         // GAMEOVER
         if (this.gameOver){
-            this.music.pause();
+            this.music.pauseMusic();
             this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                 this.ctx.fillRect(0,0,this.canvasWidth,this.canvasHeight);
 
@@ -184,7 +187,7 @@ export class Game{
         }
     }
 
-    setupInput(){
+    setupInput(){ // Makes inputs work
         window.addEventListener('keydown', (e)=>{
             this.inputKeys[e.key] = true;
             if (this.gameOver && e.key == 'Enter'){
@@ -196,7 +199,7 @@ export class Game{
         })
     }
 
-    musicToggle(){ // t
+    /*musicToggle(){ // Toggles music
         if (this.inputKeys['m']){
             this.playMusic = false;
             this.music.pause();
@@ -205,21 +208,34 @@ export class Game{
             this.playMusic = true;
             this.music.play();
         }
-    }
+    }*/
 
     restart(){
+        // SCORE
         this.score = 0;
         this.scoreDisplay.innerHTML = 'Pontszám '+ this.score;
+
+        // ENEMIES
         this.enemies = [];
         this.enemyTimer = 0;
+
+        // OBSTACLES
         this.bonuses = [];
         this.dangers = [];
+
+        // GAMEOVER
         this.gameOver = false;
+
+        // PLAYER
         this.player = new Player(this);
-        if (this.playMusic){
-            this.music.load();
-            this.music.play();
+
+        // MUSIC
+        if (this.music.playMusic){
+            this.music.loadMusic();
+            this.music.startMusic();
         }
+
+        // RESTART
         this.loop();
     }
 
@@ -233,35 +249,29 @@ export class Game{
     }
 
     start(){
-        if (this.playMusic){
-            this.music.load();
-            this.music.play();
+        if (this.music.playMusic){
+            this.music.loadMusic();
+            this.music.startMusic();
         }
         this.loop();
     }
 
-    checkCollision(rect1, rect2){
+    checkCollision(a, b){ // Checks if two objects touch
         return (
-            rect1.x < rect2.x + rect2.width &&
-            rect1.x + rect1.width > rect2.x &&
-            rect1.y < rect2.y + rect2.height &&
-            rect1.y + rect1.height > rect2.y
+            a.x < b.x + b.width &&
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y + a.height > b.y
         )
     }
 
-    offset(canvasHeight, height, lane){
-        lane = lane * 2 - 1
-        return ((canvasHeight / 8) * lane - height / 2) +
-            (this.rnd(-1, 1) * (canvasHeight / 32));
-    }
-
-    fpsCap() {
+    fpsCap() { // Limits the frames per second
         setTimeout(() => {
             requestAnimationFrame(()=> this.loop());
             }, 1000 / this.fps);
     }
 
-    rnd(min, max) {
+    rnd(min, max) { // Random number between min and max
         return Math.random() * (max - min + 1) + min;
     }
 }

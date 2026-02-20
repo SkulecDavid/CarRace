@@ -1,14 +1,17 @@
 export class Danger{
     constructor(game){
+        // BASIC
         this.game = game;
         this.width = 40;
         this.height = 40;
         this.color = '#F00'
 
+        // POSITION
         this.x = this.game.canvasWidth;
         this.y = this.game.rnd(0, this.game.canvasHeight - this.height);
-        this.speed = 10; // 
+        this.speed = 10;
 
+        // DELETION
         this.markedForDeletion = false;
     }
 
@@ -21,7 +24,7 @@ export class Danger{
         this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
-    isOffScreen(){
+    isOffScreen(){ // Determines whether the object left the canvas
         return this.x + this.width < 0;
     }
 }
