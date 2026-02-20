@@ -41,7 +41,7 @@ export class Game{
     }
 
     update(){
-        //this.musicTurn()
+        this.musicTurn()
 
         this.player.update();
 
@@ -194,16 +194,10 @@ export class Game{
             (this.rnd(-1, 1) * (canvasHeight / 32));
     }
 
-
     fpsCap() {
-        if (this.playMusic){
-            setTimeout(() => {
-            requestAnimationFrame(()=> this.loop());
-            }, 1000 / this.fps);
-        } else {
         setTimeout(() => {
             requestAnimationFrame(()=> this.loop());
-            }, 1000 / this.fps);}
+            }, 1000 / this.fps);
     }
 
     rnd(min, max) {
