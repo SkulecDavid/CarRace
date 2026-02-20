@@ -148,7 +148,6 @@ export class Game{
 
     start(){
         this.loop();
-        setTimeout
     }
 
     checkCollision(rect1, rect2){
