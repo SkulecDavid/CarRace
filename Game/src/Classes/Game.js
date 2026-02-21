@@ -2,7 +2,7 @@ import { Bg } from "./Bg.js";
 import { Bonus } from "./Bonus.js";
 import { Danger } from "./Danger.js";
 import { Enemy } from "./Enemy.js";
-import { Music } from "./Music.js";
+import { Sound } from "./Sound.js";
 import { Player } from "./Player.js";
 //import { Countdown } from "./Countdown.js"; // WIP
 
@@ -41,8 +41,8 @@ export class Game{
         this.dangerTimer = 0;
         this.dangerInterval = this.rnd(100, 300);
 
-        // MUSIC
-        this.music = new Music(this);
+        // SOUNDS
+        this.sound = new Sound(this);
 
         // OTHER
         this.gameOver = false;
@@ -55,7 +55,7 @@ export class Game{
 
     update(){
         // MUSIC
-        this.music.musicToggle();
+        this.sound.musicToggle();
 
 
         // PLAYER
@@ -116,6 +116,7 @@ export class Game{
         this.bonuses.forEach(b =>{
             b.update();
             if (this.checkCollision(this.player, b)){
+                this.sound.collect();
                 b.markedForDeletion = true;
                 this.score += 100;
                 this.updateScore();
@@ -139,6 +140,7 @@ export class Game{
         this.dangers.forEach(d =>{
             d.update();
             if (this.checkCollision(this.player, d)){
+                this.sound.hit();
                 d.markedForDeletion = true;
                 this.score -= 100;
                 this.updateScore();
@@ -176,7 +178,8 @@ export class Game{
 
         // GAMEOVER
         if (this.gameOver){
-            this.music.pauseMusic();
+            this.sound.pauseMusic();
+            this.sound.crash();
             this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                 this.ctx.fillRect(0,0,this.canvasWidth,this.canvasHeight);
 
@@ -221,10 +224,8 @@ export class Game{
         this.player = new Player(this);
 
         // MUSIC
-        if (this.music.playMusic){
-            this.music.loadMusic();
-            this.music.startMusic();
-        }
+        this.sound.loadMusic();
+        this.sound.startMusic();
 
         // RESTART
         this.loop();
@@ -240,10 +241,8 @@ export class Game{
     }
 
     start(){
-        if (this.music.playMusic){
-            this.music.loadMusic();
-            this.music.startMusic();
-        }
+        this.sound.loadMusic();
+        this.sound.startMusic();
         this.loop();
     }
 

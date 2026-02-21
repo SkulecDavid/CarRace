@@ -11,7 +11,7 @@ export class Enemy{
         this.x = this.game.canvasWidth;
         this.y = this.offset(this.game.canvasHeight, this.height, this.lane);
         this.speed = (this.y > this.game.canvasHeight / 2 ?
-            this.game.rnd(5,7) * 2 : this.game.rnd(5,7));
+            this.game.rnd(6,8) * 2 : this.game.rnd(5,7));
 
         // TEXTURE
         this.image = (this.y > this.game.canvasHeight / 2 ?

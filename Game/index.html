@@ -23,12 +23,22 @@
     <audio controls style="display: none;" id="music">
       <source src="/sounds/music.MP3" type="audio/mpeg">
     </audio>
+    <audio controls style="display: none;" id="collect-sound">
+      <source src="/sounds/Collect.ogg" type="audio/mpeg">
+    </audio>
+    <audio controls style="display: none;" id="hit-sound">
+      <source src="/sounds/Hit.ogg" type="audio/mpeg">
+    </audio>
+    <audio controls style="display: none;" id="crash-sound">
+      <source src="/sounds/Crash.ogg" type="audio/mpeg">
+    </audio>
     <h1>Evening Racer</h1>
     <h2 id="highscore-display">High Score: 0</h2>
     <h3 id="score-display">Score: 0</h3>
     <canvas id="game-canvas"></canvas>
     <p>Use the arrow keys to steer</p>
     <p>Press M to mute, press N to play music</p>
+    <p>Collect fuel and avoid traffic cones</p>
   </div>
   <script type="module" src="/src/main.js"></script>
 </body>
