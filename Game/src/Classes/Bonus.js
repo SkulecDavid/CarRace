@@ -13,6 +13,9 @@ export class Bonus{
 
         // DELETION
         this.markedForDeletion = false;
+
+        // TEXTURE
+        this.image = document.querySelector('#fuel-img');
     }
 
     update(){
@@ -20,8 +23,16 @@ export class Bonus{
     }
 
     draw(){
-        this.game.ctx.fillStyle = this.color;
-        this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        // Texture off
+        //this.game.ctx.fillStyle = this.color;
+        //this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        // Texture on
+        this.game.ctx.drawImage(
+            this.image,
+            this.x,
+            this.y
+        )
     }
 
     isOffScreen(){ // Determines whether the object left the canvas

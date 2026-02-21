@@ -1,10 +1,10 @@
 import { Bg } from "./Bg.js";
 import { Bonus } from "./Bonus.js";
-//import { Countdown } from "./Countdown.js";
 import { Danger } from "./Danger.js";
 import { Enemy } from "./Enemy.js";
 import { Music } from "./Music.js";
 import { Player } from "./Player.js";
+//import { Countdown } from "./Countdown.js"; // WIP
 
 export class Game{
     constructor(canvas){
@@ -39,13 +39,10 @@ export class Game{
         // DANGERS
         this.dangers = [];
         this.dangerTimer = 0;
-        this.dangerInterval = this.rnd(300, 500);
+        this.dangerInterval = this.rnd(100, 300);
 
         // MUSIC
         this.music = new Music(this);
-        /*this.music = document.querySelector('#music');
-        this.playMusic = false;
-        this.musicToggle();*/
 
         // OTHER
         this.gameOver = false;
@@ -58,7 +55,6 @@ export class Game{
 
     update(){
         // MUSIC
-        //this.musicToggle()
         this.music.musicToggle();
 
 
@@ -85,11 +81,7 @@ export class Game{
                 if (this.player.y > this.canvasHeight / 2){
                     this.score += 5;
                 }
-                this.scoreDisplay.innerHTML = 'Score: ' + this.score;
-                if (this.score > this.highScore){
-                    this.highScore = this.score;
-                    this.highscoreDisplay.innerHTML = 'High Score: ' + this.score;
-                }
+                this.updateScore();
             }
         })
         this.enemies = this.enemies.filter(e => !e.markedForDeletion);
@@ -123,6 +115,11 @@ export class Game{
         }
         this.bonuses.forEach(b =>{
             b.update();
+            if (this.checkCollision(this.player, b)){
+                b.markedForDeletion = true;
+                this.score += 100;
+                this.updateScore();
+            }
             if (b.isOffScreen()){
                 b.markedForDeletion = true;
             }
@@ -134,13 +131,18 @@ export class Game{
         if (this.dangerTimer > this.dangerInterval){
             this.dangers.push(new Danger(this));
             this.dangerTimer = 0;
-            this.dangerInterval = this.rnd(300, 500);
+            this.dangerInterval = this.rnd(100, 300);
         }
         else{
             this.dangerTimer++;
         }
         this.dangers.forEach(d =>{
             d.update();
+            if (this.checkCollision(this.player, d)){
+                d.markedForDeletion = true;
+                this.score -= 100;
+                this.updateScore();
+            }
             if (d.isOffScreen()){
                 d.markedForDeletion = true;
             }
@@ -199,17 +201,6 @@ export class Game{
         })
     }
 
-    /*musicToggle(){ // Toggles music
-        if (this.inputKeys['m']){
-            this.playMusic = false;
-            this.music.pause();
-        }
-        if (this.inputKeys['n']){
-            this.playMusic = true;
-            this.music.play();
-        }
-    }*/
-
     restart(){
         // SCORE
         this.score = 0;
@@ -263,6 +254,14 @@ export class Game{
             a.y < b.y + b.height &&
             a.y + a.height > b.y
         )
+    }
+
+    updateScore(){ // Updates score and high score
+        this.scoreDisplay.innerHTML = 'Score: ' + this.score;
+        if (this.score > this.highScore){
+            this.highScore = this.score;
+            this.highscoreDisplay.innerHTML = 'High Score: ' + this.score;
+        }
     }
 
     fpsCap() { // Limits the frames per second
