@@ -4,7 +4,6 @@ import { Danger } from "./Danger.js";
 import { Enemy } from "./Enemy.js";
 import { Sound } from "./Sound.js";
 import { Player } from "./Player.js";
-//import { Countdown } from "./Countdown.js"; // WIP
 
 export class Game{
     constructor(canvas){
