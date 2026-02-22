@@ -9,37 +9,47 @@
 </head>
 
 <body class="bg-light">
-  <script>
-    var audio = new Audio();
-    audio.src = "/sounds/music.MP3";
-    audio.preload = 'auto';
-  </script>
-  <div id="ui">
-    <img src="/images/Player.png" id="player-img" style="display: none;">
-    <img src="/images/EnemyA.png" id="enemya-img" style="display: none;">
-    <img src="/images/EnemyB.png" id="enemyb-img" style="display: none;">
-    <img src="/images/Cone.png" id="cone-img" style="display: none;">
-    <img src="/images/FuelHigh.png" id="fuel-img" style="display: none;">
-    <audio controls style="display: none;" id="music">
+  <div id="assets">
+    <!-- Textures -->
+    <img src="/images/Player.png" id="player-img">
+    <img src="/images/EnemyA.png" id="enemya-img">
+    <img src="/images/EnemyB.png" id="enemyb-img">
+    <img src="/images/Cone.png" id="cone-img">
+    <img src="/images/FuelHigh.png" id="fuel-img">
+
+    <!-- Sounds -->
+    <audio controls id="music">
       <source src="/sounds/music.MP3" type="audio/mpeg">
     </audio>
-    <audio controls style="display: none;" id="collect-sound">
+    <audio controls id="collect-sound">
       <source src="/sounds/Collect.ogg" type="audio/mpeg">
     </audio>
-    <audio controls style="display: none;" id="hit-sound">
+    <audio controls id="hit-sound">
       <source src="/sounds/Hit.ogg" type="audio/mpeg">
     </audio>
-    <audio controls style="display: none;" id="crash-sound">
+    <audio controls id="crash-sound">
       <source src="/sounds/Crash.ogg" type="audio/mpeg">
     </audio>
+
+    <!-- Load music -->
+    <script>
+      var audio = new Audio();
+      audio.src = "/sounds/music.MP3";
+      audio.preload = 'auto';
+    </script>
+  </div>
+
+  <div id="ui">
     <h1>Evening Racer</h1>
     <h2 id="highscore-display">High Score: 0</h2>
     <h3 id="score-display">Score: 0</h3>
+    <h3 id="level-display">Difficulty: Level 1</h3>
     <canvas id="game-canvas"></canvas>
     <p>Use the arrow keys to steer</p>
-    <p>Press M to mute, press N to play music</p>
     <p>Collect fuel and avoid traffic cones</p>
+    <p>Press M to mute, press N to play music</p>
   </div>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 

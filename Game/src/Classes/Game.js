@@ -24,7 +24,8 @@ export class Game{
         // ENEMIES
         this.enemies = [];
         this.enemyTimer = 0;
-        this.enemyInterval = 20;
+        this.difficulty = 25;
+        this.enemyInterval = this.rnd(this.difficulty-5,this.difficulty+5)
 
         // LINES
         this.lines = [];
@@ -50,12 +51,19 @@ export class Game{
         this.score = 0;
         this.highscoreDisplay = document.querySelector('#highscore-display');
         this.highScore = 0;
+        this.level = 1;
+        this.levelDisplay = document.querySelector('#level-display')
         this.fps = 120;
     }
 
     update(){
         // MUSIC
         this.sound.musicToggle();
+
+
+        // LEVELS
+        this.level = 5 - Math.floor(this.difficulty / 5);
+        this.levelDisplay.innerHTML = 'Difficulty: Level ' + this.level;
 
 
         // PLAYER
@@ -66,6 +74,8 @@ export class Game{
         if (this.enemyTimer > this.enemyInterval){
             this.enemies.push(new Enemy(this));
             this.enemyTimer = 0;
+            this.difficulty -= this.difficulty/300;
+            this.enemyInterval = this.rnd(this.difficulty-5,this.difficulty+5)
         }
         else{
             this.enemyTimer++;
@@ -158,11 +168,6 @@ export class Game{
             l.draw();
         });
 
-        // ENEMIES
-        this.enemies.forEach(e =>{
-            e.draw();
-        });
-
         // BONUSES
         this.bonuses.forEach(b => {
             b.draw();
@@ -172,6 +177,11 @@ export class Game{
         this.dangers.forEach(d => {
             d.draw();
         })
+
+        // ENEMIES
+        this.enemies.forEach(e =>{
+            e.draw();
+        });
 
         // PLAYER
         this.player.draw();
@@ -183,8 +193,8 @@ export class Game{
             this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                 this.ctx.fillRect(0,0,this.canvasWidth,this.canvasHeight);
 
-                this.ctx.fillStyle ="white";
-                this.ctx.font = "40px Arial";
+                this.ctx.fillStyle ="#f61379";
+                this.ctx.font = "60px monospace";
                 this.ctx.textAlign = "center";
                 this.ctx.fillText("GAME OVER",
                     this.canvasWidth/2,
@@ -198,6 +208,12 @@ export class Game{
             if (this.gameOver && e.key == 'Enter'){
                 this.restart();
             }
+            if (!this.gameOver && e.key == 'r'){
+                this.gameOver = true;
+            }
+            if (!this.gameOver && e.key == 'p'){
+                this.score += 1000;
+            }
         })
         window.addEventListener('keyup', (e)=>{
             this.inputKeys[e.key] = false;
@@ -207,7 +223,7 @@ export class Game{
     restart(){
         // SCORE
         this.score = 0;
-        this.scoreDisplay.innerHTML = 'Pontszám '+ this.score;
+        this.scoreDisplay.innerHTML = 'Score: '+ this.score;
 
         // ENEMIES
         this.enemies = [];
@@ -226,6 +242,9 @@ export class Game{
         // MUSIC
         this.sound.loadMusic();
         this.sound.startMusic();
+
+        // DIFFICULTY
+        this.difficulty = 25;
 
         // RESTART
         this.loop();
