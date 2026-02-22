@@ -1,19 +1,25 @@
-/* Saját stílusok */
-
 body {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #222;
-    color: white;
-    
+    background-color: #1e1e24;
+    color: #00a5cf;
+    font-family: monospace;
+    background-image: url(/images/Bg.jpg);
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 canvas {
-    border: 4px solid white;
+    border: 10px solid #3A0CA3;
     background: #000;
+}
+
+#assets {
+    display: none;
 }
 
 #ui {

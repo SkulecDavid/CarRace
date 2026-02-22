@@ -1,45 +1,47 @@
 export class Sound{
     constructor(game){
+        // BASIC
         this.game = game;
-        this.playSound = false;
+        this.playSound = true;
 
+        // FILES
         this.music = document.querySelector('#music');
         this.crashSound = document.querySelector('#crash-sound');
         this.hitSound = document.querySelector('#hit-sound');
         this.collectSound = document.querySelector('#collect-sound');
     }
 
-    loadMusic(){
+    loadMusic(){ // Restarts music
         if (this.playSound){
             this.music.load();
         }
     }
 
-    startMusic(){
+    startMusic(){ // Resumes music
         if (this.playSound){
             this.music.play();
         }
     }
 
-    pauseMusic(){
+    pauseMusic(){ // Stops music
         this.music.pause();
     }
 
-    crash(){
+    crash(){ // Plays crash sound
         if (this.playSound){
             this.crashSound.load();
             this.crashSound.play();
         }
     }
 
-    hit(){
+    hit(){ // Plays sound when traffic cone hit
         if (this.playSound){
             this.hitSound.load();
             this.hitSound.play();
         }
     }
 
-    collect(){
+    collect(){ // Plays sound when fuel collected
         if (this.playSound){
             this.collectSound.load();
             this.collectSound.play();
